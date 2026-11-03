@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, My Love ❤️ | From Shangman</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Playfair Display, Dancing Script, and Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            handwritten: ['"Dancing Script"', 'cursive'],
+            sans: ['"Inter"', 'sans-serif'],
+          },
+          colors: {
+            parchment: '#fcfaf6',
+            rosegold: '#e07a7e',
+            wine: '#781d2f',
+            goldaccent: '#d4af37',
+            blush: '#fdf2f4'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at 50% 15%, #fff5f7 0%, #fde4ea 50%, #f7cad4 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Ambient Canvas for Floating Hearts & Soft Golden Embers */
+    #ambientCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Envelope 3D Container & Dynamics */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+
+    .envelope-box {
+      box-shadow: 0 25px 50px -12px rgba(120, 29, 47, 0.28), 0 0 20px rgba(224, 122, 126, 0.2);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .envelope-box:hover {
+      transform: translateY(-8px) scale(1.015);
+    }
+
+    .envelope-flap {
+      transform-origin: top center;
+      transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .flap-opened {
+      transform: rotateX(180deg);
+      z-index: 2 !important;
+    }
+
+    /* Embossed Wax Seal */
+    .wax-seal {
+      background: radial-gradient(circle at 35% 35%, #b91c1c, #6d101e);
+      box-shadow: 0 4px 14px rgba(109, 16, 30, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.35), inset 0 -2px 5px rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(212, 175, 55, 0.5);
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .wax-seal:hover {
+      transform: translate(-50%, -50%) scale(1.1) !important;
+      filter: brightness(1.15);
+    }
+
+    /* Parchment Paper Realistic Look */
+    .parchment-sheet {
+      background-color: #fdfaf6;
+      background-image: 
+        radial-gradient(circle at 95% 95%, rgba(245, 225, 200, 0.45) 0%, transparent 60%),
+        radial-gradient(circle at 5% 5%, rgba(253, 230, 236, 0.5) 0%, transparent 55%);
+      box-shadow: 0 20px 50px -10px rgba(92, 30, 45, 0.16), 0 0 2px rgba(0,0,0,0.06);
+    }
+
+    /* Polaroid Picture Styling */
+    .polaroid {
+      background: #ffffff;
+      box-shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.15), 0 4px 8px -2px rgba(0, 0, 0, 0.06);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.03) !important;
+      box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.22);
+    }
+
+    /* 3D Flip Cards */
+    .card-preserve-3d {
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .flipped {
+      transform: rotateY(180deg);
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .animate-gentle-pulse {
+      animation: gentlePulse 2.8s infinite ease-in-out;
+    }
+
+    @keyframes candleFlicker {
+      0%, 100% { opacity: 1; transform: scaleY(1); }
+      50% { opacity: 0.8; transform: scaleY(0.9) scaleX(0.95); }
+    }
+    .flicker {
+      animation: candleFlicker 0.8s infinite ease-in-out alternate;
+    }
+  </style>
+</head>
+<body class="text-neutral-800 antialiased min-h-screen relative flex flex-col justify-between selection:bg-rose-200">
+
+  <!-- Ambient Floating Particles & Embers Canvas -->
+  <canvas id="ambientCanvas"></canvas>
+
+  <!-- Header: Music Toggle & GitHub Hosting Instructions -->
+  <header class="relative z-20 w-full max-w-4xl mx-auto px-4 pt-4 sm:pt-6 flex justify-between items-center text-xs sm:text-sm">
+    <div class="flex items-center gap-2">
+      <!-- Web Audio Wind Chimes Synthesizer Toggle -->
+      <button id="audioToggleBtn" onclick="toggleAudio()" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-rose-200 text-rose-900 shadow-sm hover:bg-white hover:border-rose-300 transition-all cursor-pointer">
+        <span id="audioIcon">🎵</span>
+        <span id="audioStatusText" class="font-medium">Melody: Off</span>
+      </button>
+    </div>
+
+    <!-- Quick GitHub Guide Trigger -->
+    <button onclick="toggleModal('githubModal')" class="px-3.5 py-1.5 rounded-full bg-white/70 hover:bg-white backdrop-blur-sm border border-rose-200 text-neutral-600 hover:text-rose-900 transition-all text-xs flex items-center gap-1.5 shadow-sm cursor-pointer">
+      <span>🚀 How to Host on GitHub</span>
+    </button>
+  </header>
+
+  <!-- Main Container -->
+  <main class="relative z-10 flex-grow flex items-center justify-center p-4 sm:p-6 my-auto">
+    
+    <!-- 1. ENVELOPE STAGE (Default View) -->
+    <div id="envelopeStage" class="w-full max-w-md mx-auto flex flex-col items-center justify-center py-8 transition-all duration-700">
+      
+      <!-- Invitation Prompt -->
+      <div class="text-center mb-6 animate-gentle-pulse">
+        <span class="text-xs uppercase tracking-widest text-rose-800 font-bold bg-white/80 backdrop-blur-sm px-3.5 py-1 rounded-full border border-rose-200 shadow-sm">
+          A Special Birthday Delivery
+        </span>
+        <h1 class="font-serif text-3xl sm:text-4xl text-rose-950 mt-3 font-bold tracking-tight">For My Beloved Husband</h1>
+        <p class="text-rose-900/70 text-xs sm:text-sm mt-1">Break the wax seal to unfold your letter</p>
+      </div>
+
+      <!-- Envelope 3D Fold -->
+      <div class="relative w-80 h-52 sm:w-96 sm:h-60 bg-rose-200 rounded-b-2xl envelope-box perspective-1000 cursor-pointer overflow-hidden group" onclick="openEnvelope()">
+        <!-- Envelope Liner -->
+        <div class="absolute inset-0 bg-gradient-to-b from-rose-100 to-rose-200 opacity-90"></div>
+
+        <!-- Peeking Paper Inside -->
+        <div id="peekingLetter" class="absolute left-6 right-6 top-5 h-44 bg-parchment rounded-t-lg shadow-sm border border-rose-100 transition-all duration-500 group-hover:-translate-y-3 flex flex-col items-center justify-center px-4">
+          <span class="text-rose-400 font-serif text-xs italic tracking-wide">"It is another year. How time flies..."</span>
+          <div class="w-16 h-0.5 bg-rose-200 mt-2"></div>
+        </div>
+
+        <!-- Envelope Fold Triangles -->
+        <div class="absolute inset-0 pointer-events-none z-10">
+          <div class="absolute bottom-0 left-0 w-0 h-0 border-l-[160px] sm:border-l-[192px] border-b-[104px] sm:border-b-[120px] border-l-rose-300 border-b-rose-300 opacity-95"></div>
+          <div class="absolute bottom-0 right-0 w-0 h-0 border-r-[160px] sm:border-r-[192px] border-b-[104px] sm:border-b-[120px] border-r-rose-300 border-b-rose-300 opacity-95"></div>
+          <div class="absolute bottom-0 left-0 right-0 h-0 border-l-[160px] sm:border-l-[192px] border-r-[160px] sm:border-r-[192px] border-b-[120px] sm:border-b-[138px] border-l-transparent border-r-transparent border-b-rose-400/90 drop-shadow-md"></div>
+        </div>
+
+        <!-- Top Flap -->
+        <div id="envelopeFlap" class="absolute top-0 left-0 right-0 h-32 sm:h-36 bg-rose-400 envelope-flap z-20 origin-top shadow-md">
+          <div class="w-full h-full bg-gradient-to-b from-rose-300 to-rose-400"></div>
+        </div>
+
+        <!-- Embossed Seal with Initials S & M -->
+        <div id="waxSealBtn" class="absolute left-1/2 top-28 sm:top-32 -translate-x-1/2 -translate-y-1/2 z-30 wax-seal w-14 h-14 sm:w-16 sm:h-16 rounded-full flex flex-col items-center justify-center cursor-pointer shadow-xl">
+          <span class="text-amber-200 font-serif font-bold text-xs tracking-wider select-none">S & M</span>
+          <span class="text-rose-200 text-[10px] -mt-0.5 select-none">♥</span>
+        </div>
+      </div>
+
+      <button onclick="openEnvelope()" class="mt-8 text-rose-900 text-sm font-semibold tracking-wide flex items-center gap-2 hover:text-rose-950 transition-colors">
+        <span>Click seal to open</span>
+        <span class="text-lg animate-bounce">💌</span>
+      </button>
+    </div>
+
+    <!-- 2. REVEALED LETTER STAGE -->
+    <div id="letterStage" class="hidden opacity-0 w-full max-w-3xl mx-auto my-4 transition-all duration-1000 transform translate-y-8">
+      
+      <article class="parchment-sheet rounded-3xl p-6 sm:p-10 md:p-14 border border-rose-100/90 relative">
+        
+        <!-- Airmail Vintage Stamp Stamp -->
+        <div class="absolute top-6 right-6 sm:top-8 sm:right-8 flex flex-col items-center pointer-events-none opacity-85">
+          <div class="w-16 h-18 border-2 border-dashed border-rose-300 rounded-md flex flex-col items-center justify-center p-1 bg-rose-50/80 text-[9px] text-rose-600 font-serif">
+            <span class="font-bold tracking-widest text-amber-700">MIAMI, FL</span>
+            <span class="text-lg my-0.5">☀️🌴</span>
+            <span class="text-[8px] text-rose-400">FAITH & LOVE</span>
+          </div>
+          <div class="text-[8px] font-mono text-rose-400/80 mt-1 uppercase tracking-widest">EST. TOGETHER</div>
+        </div>
+
+        <!-- Salutation Header -->
+        <div class="mb-6 sm:mb-8 pr-20">
+          <p class="text-xs sm:text-sm font-serif italic text-rose-700/80 mb-1">A Letter for Your Birthday • To My Husband</p>
+          <h2 class="font-serif text-3xl sm:text-4xl text-rose-950 font-bold tracking-tight">Dear,</h2>
+        </div>
+
+        <!-- Polaroid Photo Frame with Uploader & Fallback -->
+        <div class="float-none md:float-right md:ml-8 mb-8 md:mb-6 mx-auto w-72 max-w-full">
+          <div class="polaroid p-3.5 rounded-xl rotate-1 hover:rotate-0 transition-transform">
+            
+            <div class="w-full h-80 bg-neutral-100 rounded-lg overflow-hidden relative group">
+              <!-- Actual Couple Photo Image Tag -->
+              <img 
+                id="couplePhoto"
+                src="photo.jpg" 
+                alt="Shangman and her husband" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                onerror="handleImageFallback(this)"
+              />
+
+              <!-- Interactive local photo selector overlay for previewing instantly -->
+              <label for="photoUploader" class="absolute inset-0 bg-black/40 text-white flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-4 text-center">
+                <span class="text-2xl mb-1">📷</span>
+                <span class="text-xs font-semibold">Click to preview photo</span>
+                <span class="text-[10px] text-rose-200 mt-1">Changes photo live</span>
+              </label>
+              <input type="file" id="photoUploader" accept="image/*" class="hidden" onchange="previewUserPhoto(event)">
+            </div>
+
+            <!-- Polaroid Caption -->
+            <p class="text-center font-handwritten text-2xl text-neutral-800 mt-3">Side by side, always ✨</p>
+            
+            <!-- Quick Helper Tip -->
+            <div class="mt-2 pt-2 border-t border-neutral-100 text-[10px] text-neutral-400 text-center leading-tight">
+              <span>Tip: Save your photo as <code>photo.jpg</code> in the repo to show here automatically!</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- The Exact Heartfelt Love Letter Message -->
+        <div class="prose prose-rose max-w-none text-neutral-800 leading-relaxed font-serif text-base sm:text-lg space-y-4">
+          <p>
+            It is another year. How time flies:)
+          </p>
+          <p>
+            I would not be able to imagine if my life right now without you. All your thoughtful and unthoughtful supports have always help me to stay strong. I would never think that we would move to Miami, FL this year. Thanks to you, I have the courage to move forward.
+          </p>
+          <p>
+            I know we fight sometimes; but what's more importantly, I love how we always come together to solve the problems. I love that we solve problems together; not seeing each other as problems. So many broken stories that I heard, and I am so glad that we are not one of them. I also love we always pray together and fellowship together. God does not make any mistake, you know.
+          </p>
+          <p class="font-bold text-rose-900 text-lg sm:text-xl pt-2">
+            I love you so much, babe. Happy Birthday!
+          </p>
+        </div>
+
+        <div class="clear-both"></div>
+
+        <!-- Signature Sign-off -->
+        <div class="mt-8 pt-6 border-t border-rose-200/60 flex justify-between items-end flex-wrap gap-4">
+          <button onclick="spawnConfettiHeartShower()" class="px-5 py-2.5 rounded-full bg-rose-50 hover:bg-rose-100/80 text-rose-800 border border-rose-200 text-xs sm:text-sm font-medium transition-all shadow-sm flex items-center gap-2 cursor-pointer group">
+            <span class="group-hover:scale-125 transition-transform text-rose-600">❤️</span>
+            <span>Send Love</span>
+          </button>
+
+          <div class="text-right ml-auto">
+            <p class="font-serif italic text-sm text-neutral-500">Your wife,</p>
+            <p class="font-handwritten text-3xl sm:text-4xl text-rose-800 mt-1">Shangman Murrell</p>
+          </div>
+        </div>
+
+      </article>
+
+      <footer class="text-center mt-6 text-xs text-rose-900/60 pb-8">
+        Shangman Murrell & Her Beloved Husband • Forever & Always
+      </footer>
+
+    </div>
+
+  </main>
+
+  <!-- "How to Host on GitHub Pages" Guide Modal -->
+  <div id="githubModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-sm p-4 hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="toggleModal('githubModal')" class="absolute top-4 right-4 text-neutral-400 hover:text-neutral-700 w-8 h-8 rounded-full flex items-center justify-center bg-neutral-100 cursor-pointer">
+        ✕
+      </button>
+
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-2xl">🚀</span>
+        <h3 class="font-serif text-xl font-bold text-rose-950">How to Host on GitHub Pages</h3>
+      </div>
+      <p class="text-xs text-neutral-500 mb-4">You can have this live on the web for free in just 3 steps:</p>
+
+      <ol class="space-y-3.5 text-xs sm:text-sm text-neutral-700 list-decimal list-inside leading-relaxed">
+        <li>
+          <strong>Create a GitHub Repo:</strong> Go to <a href="https://github.com/new" target="_blank" class="text-rose-700 font-semibold underline">github.com/new</a>, name it (e.g. <code class="bg-rose-50 text-rose-800 px-1.5 py-0.5 rounded font-mono">birthday-letter</code>), and choose <strong>Public</strong>.
+        </li>
+        <li>
+          <strong>Upload 2 Files:</strong>
+          <ul class="list-disc list-inside ml-4 mt-1 space-y-1 text-neutral-600">
+            <li>Save this file as <code class="bg-neutral-100 px-1 py-0.5 rounded font-mono">index.html</code>.</li>
+            <li>Take your couple picture, name it <code class="bg-neutral-100 px-1 py-0.5 rounded font-mono">photo.jpg</code>, and upload it right beside <code class="font-mono">index.html</code>.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Enable GitHub Pages:</strong> Go to your repo <strong>Settings → Pages</strong> (on the left menu). Under <em>Branch</em>, select <code class="bg-neutral-100 px-1 py-0.5 rounded font-mono">main</code> (root) and click <strong>Save</strong>.
+        </li>
+      </ol>
+
+      <div class="mt-5 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-950">
+        ✨ In about 60 seconds, your site will be live at: <br/>
+        <span class="font-mono text-rose-700 font-semibold">https://&lt;your-username&gt;.github.io/birthday-letter/</span>
+      </div>
+
+      <div class="mt-6 flex justify-end">
+        <button onclick="toggleModal('githubModal')" class="px-5 py-2 rounded-full bg-rose-800 text-white text-xs font-medium cursor-pointer">
+          Got it, let's go!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript: Canvas particles, Web Audio synthesizer, Envelope mechanics & Confetti -->
+  <script>
+    /* =========================================================================
+     * 1. FLOATING PARTICLES CANVAS (Hearts, Embers & Confetti)
+     * ========================================================================= */
+    const canvas = document.getElementById('ambientCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor(x, y, isConfetti = false) {
+        this.x = x !== undefined ? x : Math.random() * width;
+        this.y = y !== undefined ? y : height + 20;
+        this.isConfetti = isConfetti;
+        this.size = isConfetti ? Math.random() * 8 + 4 : (Math.random() > 0.4 ? Math.random() * 12 + 8 : Math.random() * 4 + 2);
+        this.speedY = isConfetti ? -(Math.random() * 6 + 2) : (Math.random() * 0.8 + 0.35);
+        this.speedX = isConfetti ? (Math.random() - 0.5) * 6 : (Math.random() - 0.5) * 0.5;
+        this.gravity = isConfetti ? 0.12 : 0;
+        this.opacity = Math.random() * 0.7 + 0.3;
+        this.rotation = Math.random() * Math.PI;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.04;
+        
+        const palette = ['#e11d48', '#f43f5e', '#fb7185', '#fda4af', '#f59e0b', '#d4af37'];
+        this.color = palette[Math.floor(Math.random() * palette.length)];
+        this.isHeart = !isConfetti && Math.random() > 0.4;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.globalAlpha = Math.max(0, this.opacity);
+
+        if (this.isHeart) {
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          const topCurve = this.size * 0.3;
+          ctx.moveTo(0, topCurve);
+          ctx.bezierCurveTo(0, 0, -this.size / 2, 0, -this.size / 2, topCurve);
+          ctx.bezierCurveTo(-this.size / 2, (this.size + topCurve) / 2, 0, this.size, 0, this.size * 1.2);
+          ctx.bezierCurveTo(0, this.size, this.size / 2, (this.size + topCurve) / 2, this.size / 2, topCurve);
+          ctx.bezierCurveTo(this.size / 2, 0, 0, 0, 0, topCurve);
+          ctx.closePath();
+          ctx.fill();
+        } else if (this.isConfetti) {
+          ctx.fillStyle = this.color;
+          ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size * 0.6);
+        } else {
+          // Soft golden/rose ember
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      update() {
+        if (this.isConfetti) {
+          this.speedY += this.gravity;
+          this.y += this.speedY;
+          this.x += this.speedX;
+          this.opacity -= 0.008;
+        } else {
+          this.y -= this.speedY;
+          this.x += this.speedX;
+          if (this.y < -30) {
+            this.y = height + 20;
+            this.x = Math.random() * width;
+          }
+        }
+        this.rotation += this.rotationSpeed;
+      }
+    }
+
+    // Initialize initial ambient particles
+    for (let i = 0; i < 28; i++) {
+      const p = new Particle();
+      p.y = Math.random() * height;
+      particles.push(p);
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.update();
+        p.draw();
+        if (p.isConfetti && p.opacity <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    function spawnConfettiHeartShower() {
+      const originX = width / 2;
+      const originY = height * 0.7;
+      for (let i = 0; i < 45; i++) {
+        particles.push(new Particle(originX, originY, true));
+      }
+      playChime(659.25); // E5
+      setTimeout(() => playChime(783.99), 120); // G5
+    }
+
+    /* =========================================================================
+     * 2. ENVELOPE OPENING MECHANICS
+     * ========================================================================= */
+    let hasOpened = false;
+    function openEnvelope() {
+      if (hasOpened) return;
+      hasOpened = true;
+
+      // Play soft harmonic sequence
+      playChime(523.25); // C5
+      setTimeout(() => playChime(659.25), 150); // E5
+      setTimeout(() => playChime(783.99), 300); // G5
+      setTimeout(() => playChime(1046.50), 450); // C6
+
+      const flap = document.getElementById('envelopeFlap');
+      const seal = document.getElementById('waxSealBtn');
+      const envelopeStage = document.getElementById('envelopeStage');
+      const letterStage = document.getElementById('letterStage');
+
+      // Break seal and flip flap
+      seal.style.opacity = '0';
+      seal.style.transform = 'translate(-50%, -50%) scale(0.5)';
+      flap.classList.add('flap-opened');
+
+      // Smooth transition to letter
+      setTimeout(() => {
+        envelopeStage.style.opacity = '0';
+        envelopeStage.style.transform = 'translateY(-25px)';
+      }, 700);
+
+      setTimeout(() => {
+        envelopeStage.classList.add('hidden');
+        letterStage.classList.remove('hidden');
+        requestAnimationFrame(() => {
+          letterStage.classList.remove('opacity-0', 'translate-y-8');
+          letterStage.classList.add('opacity-100', 'translate-y-0');
+        });
+        spawnConfettiHeartShower();
+      }, 1200);
+    }
+
+    /* =========================================================================
+     * 3. PHOTO HANDLING & PREVIEW
+     * ========================================================================= */
+    function previewUserPhoto(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById('couplePhoto');
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function handleImageFallback(imgElement) {
+      // Elegant romantic SVG placeholder if photo.jpg isn't locally found yet
+      imgElement.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="700" viewBox="0 0 600 700"><rect width="100%" height="100%" fill="%23fae8eb"/><circle cx="300" cy="280" r="90" fill="%23f43f5e" opacity="0.2"/><path d="M300 230 C270 190, 210 210, 210 260 C210 320, 300 370, 300 370 C300 370, 390 320, 390 260 C390 210, 330 190, 300 230 Z" fill="%23e11d48"/><text x="50%" y="460" font-family="Georgia, serif" font-size="24" fill="%23781d2f" text-anchor="middle" font-weight="bold">Shangman %26 Husband</text><text x="50%" y="500" font-family="sans-serif" font-size="14" fill="%239f1239" text-anchor="middle">Add your photo.jpg to the GitHub repo</text></svg>`;
+    }
+
+    /* =========================================================================
+     * 4. WEB AUDIO AMBIENT CHIMES
+     * ========================================================================= */
+    let audioCtx = null;
+    let isMusicPlaying = false;
+    let melodyInterval = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playChime(freq = 440, duration = 1.8) {
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 0.06);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        // Audio waiting for initial gesture
+      }
+    }
+
+    const pentatonicFrequencies = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25];
+
+    function toggleAudio() {
+      initAudio();
+      isMusicPlaying = !isMusicPlaying;
+
+      const icon = document.getElementById('audioIcon');
+      const text = document.getElementById('audioStatusText');
+
+      if (isMusicPlaying) {
+        icon.innerText = '✨';
+        text.innerText = 'Melody: On';
+        
+        melodyInterval = setInterval(() => {
+          const note = pentatonicFrequencies[Math.floor(Math.random() * pentatonicFrequencies.length)];
+          playChime(note, 2.2);
+        }, 1200);
+        playChime(523.25, 2.5);
+      } else {
+        icon.innerText = '🎵';
+        text.innerText = 'Melody: Off';
+        clearInterval(melodyInterval);
+      }
+    }
+
+    function toggleModal(id) {
+      const modal = document.getElementById(id);
+      if (modal.classList.contains('hidden')) {
+        modal.classList.remove('hidden');
+        requestAnimationFrame(() => modal.classList.remove('opacity-0'));
+      } else {
+        modal.classList.add('opacity-0');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+      }
+    }
+  </script>
+</body>
+</html>
